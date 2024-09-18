@@ -32,14 +32,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: Color(0XFFF1F4F9),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: const Icon(
-          Icons.arrow_back_ios,
-          color: Color(0XFFFD7C4B),
-          size: 32,
-        ),
+        toolbarHeight: 20,
       ),
       bottomNavigationBar: makeTabBar(),
       body: TabBarView(controller: _tabController, children: const [
@@ -59,7 +56,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Widget makeTabBar() {
     return Container(
-      height: 86,
       color: Colors.white,
       child: TabBar(
         controller: _tabController,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gallary_art/Modules/UISections/HomePage/Views/DetailView.dart';
 import '../Model/ArtList.dart';
 import 'ArtItemView.dart';
 
@@ -46,14 +47,22 @@ class _ArtViewState extends State<ArtView> {
               children: items.map((item) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: Container(
-                      width: double.infinity,
-                      height: 225,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0)),
-                      child: ArtItemView(artInfo: item)),
+                  child: GestureDetector(
+                    onTap: (() {
+                      print('Did Tapped');
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return DetailView(image: item.img1);
+                      }));
+                    }),
+                    child: Container(
+                        width: double.infinity,
+                        height: 225,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.0)),
+                        child: ArtItemView(artInfo: item)),
+                  ),
                 );
               }).toList(),
             ),
