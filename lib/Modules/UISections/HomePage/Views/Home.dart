@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gallary_art/Modules/UISections/HomePage/Views/ArtItemView.dart';
+import 'package:gallary_art/Modules/UISections/HomePage/Views/ArtView.dart';
+
+import '../Model/ArtList.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -8,92 +12,77 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController =
+        TabController(length: 4, vsync: this); // Custom TabController
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Color(0XFFF1F4F9),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: const Icon(
-            Icons.arrow_back_ios,
-            color: Color(0XFFFD7C4B),
-            size: 32,
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Boards',
-                style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0XFF474747)),
-              ),
-              const Text(
-                'Following galleries to power up your art career',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0XFF979EA6),
-                ),
-              ),
-              addArtListButtons()
-            ],
-          ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0XFFF1F4F9),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: const Icon(
+          Icons.arrow_back_ios,
+          color: Color(0XFFFD7C4B),
+          size: 32,
         ),
       ),
+      bottomNavigationBar: makeTabBar(),
+      body: TabBarView(controller: _tabController, children: const [
+        ArtView(),
+        Center(
+          child: Text("chat"),
+        ),
+        Center(
+          child: Text("settings"),
+        ),
+        Center(
+          child: Text("more"),
+        )
+      ]),
     );
   }
 
-  List<Widget> addSpacingBetweenItems(List<Widget> children, double spacing) {
-    return children
-        .map((widget) => Padding(
-              padding: EdgeInsets.only(right: spacing),
-              child: widget,
-            ))
-        .toList();
-  }
-
-  Widget addArtListButtons() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: addSpacingBetweenItems(
-            [
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0XFFFD7C4B),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                ),
-                child: const Text('painting',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
-              ),
-              ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0XFFFD7C4B),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                  ),
-                  child: const Text(
-                    'illustrations',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  )),
-            ],
-            8.0,
-          )),
+  Widget makeTabBar() {
+    return Container(
+      height: 86,
+      color: Colors.white,
+      child: TabBar(
+        controller: _tabController,
+        indicatorPadding: EdgeInsets.only(bottom: 4),
+        tabs: const [
+          Tab(
+            text: 'art',
+            icon: Icon(Icons.home),
+          ),
+          Tab(
+            text: 'chat',
+            icon: Icon(Icons.chat),
+          ),
+          Tab(
+            text: 'settings',
+            icon: Icon(Icons.settings),
+          ),
+          Tab(
+            text: 'more',
+            icon: Icon(Icons.more),
+          )
+        ],
+      ),
     );
   }
 }
