@@ -34,25 +34,35 @@ class _DetailViewState extends State<DetailView> {
               decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(40)),
-              child: const Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 60,
-                    ),
-                    Text(
-                      'Artist : Sagar',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      "Location : Bangladesh",
-                      style: TextStyle(fontSize: 26),
-                    )
-                  ],
+              child: Center(
+                child: TweenAnimationBuilder(
+                  tween: Tween<double>(begin: 0, end: 1),
+                  duration: Duration(seconds: 2),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 60,
+                      ),
+                      Text(
+                        'Artist : Sagar',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Location : Bangladesh",
+                        style: TextStyle(fontSize: 26),
+                      )
+                    ],
+                  ),
+                  builder: (BuildContext context, double val, Widget? child) {
+                    return Opacity(
+                      opacity: val,
+                      child: child,
+                    );
+                  },
                 ),
               ),
             ),
